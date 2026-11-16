@@ -1,0 +1,66 @@
+v 3
+d cdid: chained and ordinary difference-in-differences for Stata
+d Version 1.0.0.0. Requires Stata 19.5 (StataNow) or later.
+d Estimates group-time average treatment effects under staggered adoption in complete and incomplete panels,
+d and effects of a binary treatment with entry and exit
+d (Bellégo, Benatia and Dortet-Bernadet 2025; Callaway and Sant'Anna 2021). Reference implementation: R cdid 1.3.0.0.
+d Ordinary mode requires csdid 2.0.2, distributed in the csdid folder and installed separately.
+d License: GPL-3 (see LICENSE and THIRD_PARTY_NOTICES.md).
+f cdid.ado
+f cdid.sthlp
+f cdid_custom.sthlp
+f cdid_estat.ado
+f cdid_pretest.ado
+f cdid_pretest.sthlp
+f cdid_export.ado
+f cdid_export.sthlp
+f cdid_diagnostics.ado
+f cdid_diagnostics.sthlp
+f cdid_plot.ado
+f cdid_plot.sthlp
+f cdid_load.ado
+f cdid_load.sthlp
+f cdid_pretest_load.ado
+f cdid_pretest_load.sthlp
+f cdid_nuisance.ado
+f cdid_nuisance.sthlp
+f cdid_chain.ado
+f cdid_chain.sthlp
+f cdid_dvar.sthlp
+f cdid_postestimation.sthlp
+f _cdid_request_prepare.ado
+f _cdid_request_prepare_mref.ado
+f _cdid_imp_reference_prepare.ado
+f _cdid_aug_reference_prepare.ado
+f _cdid_baseline_reference_prepare.ado
+f _cdid_selected_reference_prepare.ado
+f _cdid_reference_prepare.ado
+f _cdid_reference_encode.ado
+f _cdid_public_post.ado
+f _cdid_post.ado
+f _cdid_ordinary.ado
+f _cdid_ordinary_frontend.ado
+f _cdid_ordinary_post.ado
+f _cdid_ordinary_aggregate.ado
+f _cdid_ordinary_pretest.ado
+f _cdid_chained_aggregate.ado
+f _cdid_static.ado
+f _cdid_pretest_chained.ado
+f _cdid_pretest_grid.ado
+f _cdid_ur_target.ado
+f _cdid_post_finish.ado
+f _cdid_pretest_display.ado
+f LICENSE
+f THIRD_PARTY_NOTICES.md
+f references/csdid-MIT-LICENSE.txt
+f README.md
+f docs/installation.md
+f docs/user-results.md
+f docs/hands-on.md
+f examples/cdid_hands_on.do
+f docs/custom-estimators.md
+f examples/cdid_custom_estimators.do
+f docs/assets/logo.png
+f docs/assets/logo.svg
+f tools/build_native.do
+f lcdid_native.mlib
