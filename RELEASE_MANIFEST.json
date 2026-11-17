@@ -1,8 +1,8 @@
 {
   "native_library": {
-    "bytes": 9086468,
+    "bytes": 9088604,
     "file": "lcdid_native.mlib",
-    "sha256": "d10c154067f4cdaceb7cf7a9bc94eb1e4bda4abdd806aaae3c2e5f5115ee2b7d"
+    "sha256": "b549cea5f24afc81fbe935252f016dcf13e8c71bbe53bca6ca18d7ad0a53d3c5"
   },
   "ordinary_dependency": {
     "commit": "be5d272debb1c98e18c7fba79f51b2b3effd3fc4",
@@ -295,12 +295,12 @@
       "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
     },
     "NEWS.md": {
-      "bytes": 607,
-      "sha256": "745f1f14f6e1ce09423c803a8cc80974ab53f87b4a8bfb124babcb25fe67be20"
+      "bytes": 842,
+      "sha256": "d1733265926108d06f725a3cb391619256052dc41ab60d65d4d0be403cb0c634"
     },
     "README.md": {
-      "bytes": 22438,
-      "sha256": "a1acd9e7e0a9ffeac9e87568a3b58a2d03742e6cc1c162c79a495121338a6497"
+      "bytes": 22747,
+      "sha256": "cabcfd4dc1a68f60492a18f7eef9da8279c8212491c84e02fefed719e41d0f20"
     },
     "THIRD_PARTY_NOTICES.md": {
       "bytes": 1743,
@@ -388,7 +388,7 @@
     },
     "_cdid_static.ado": {
       "bytes": 14529,
-      "sha256": "558789df358edb0a2d6713e9318d8d86ae2c492940f20ad63a9f7921700bfccf"
+      "sha256": "3293355c89feee1b3d896af451f643f608bfd0182fbf9565ad3d3628ea8e8edb"
     },
     "_cdid_ur_target.ado": {
       "bytes": 1655,
@@ -396,15 +396,15 @@
     },
     "cdid.ado": {
       "bytes": 28655,
-      "sha256": "ee0010f215e8ec3fa8099edbd98fadec129c2c2e46cd1b09cd5d9dabc93fae6e"
+      "sha256": "e28fa5680ed8a41becb0a6f6e5e1df15971d5b318ef779e2b631fedb15fd448e"
     },
     "cdid.pkg": {
       "bytes": 1947,
-      "sha256": "edd7b5d012c6a0855ef2f06f6530c88069619ccebf0a37648ace7a9c25454249"
+      "sha256": "88985a30cf8bcad9a190065710b65161054ea5358356faa7a69b301288b6bbc3"
     },
     "cdid.sthlp": {
-      "bytes": 48352,
-      "sha256": "5e6e802194cab05b82bab539b285e3bb8bcf3a502d70a574ddeb79486a342062"
+      "bytes": 48341,
+      "sha256": "85c6588d5345c0d5a8a18727b459746fd1bc97724cc2be39783aa1872c9617eb"
     },
     "cdid_chain.ado": {
       "bytes": 2460,
@@ -427,8 +427,8 @@
       "sha256": "d8b46cddaac0888691c1223d435f55f0d1d2ffc9ba52c9358bb1bdcf67d8f043"
     },
     "cdid_dvar.sthlp": {
-      "bytes": 17854,
-      "sha256": "8ce77c10270bd33932a49782035e7188d98a241034b6b5e966ad38621989954a"
+      "bytes": 18326,
+      "sha256": "a5b07dbbaf91aca79bfce04f53649451d2e7f8e555a03a6bd6cc90cc9be37ba4"
     },
     "cdid_estat.ado": {
       "bytes": 3154,
@@ -628,7 +628,7 @@
     },
     "docs/README.md": {
       "bytes": 12200,
-      "sha256": "8cdaa5daf1bdd48325077b72c2fc46741811d139f929688855a3db955b8dd576"
+      "sha256": "f32dcdcfd457f686d81a6113dbec20141abc965f969600d633eab73d23a58bec"
     },
     "docs/assets/get-started-cells.png": {
       "bytes": 63717,
@@ -728,7 +728,7 @@
     },
     "docs/installation.md": {
       "bytes": 3474,
-      "sha256": "3542a157923e05f7908933ff85f02c6e37fcc797614bd48847e92e3556ad4a74"
+      "sha256": "9f0caca0d59ca79ad8bfea5a0a22aa934d35b43bd0f82daf5a5ab0b81e6277fa"
     },
     "docs/methods/cohort-time-fe.md": {
       "bytes": 10237,
@@ -787,8 +787,8 @@
       "sha256": "7f486f5598ba416ef5678440a0f0cc5dd5eda3e2a97a5ab0b2f203a5d321a464"
     },
     "lcdid_native.mlib": {
-      "bytes": 9086468,
-      "sha256": "d10c154067f4cdaceb7cf7a9bc94eb1e4bda4abdd806aaae3c2e5f5115ee2b7d"
+      "bytes": 9088604,
+      "sha256": "b549cea5f24afc81fbe935252f016dcf13e8c71bbe53bca6ca18d7ad0a53d3c5"
     },
     "mata/cdid_aggregation.mata": {
       "bytes": 39190,
@@ -1119,8 +1119,8 @@
       "sha256": "a2d66e2f3478cc47475c62c511bb258c72162dea36b17b268d73e2461e24e572"
     },
     "mata/cdid_static.mata": {
-      "bytes": 78406,
-      "sha256": "3e6ce9cb5286d860d8f032848ab4f7d107c25255ce1a9a9ac845ee20b95acec9"
+      "bytes": 79814,
+      "sha256": "339b5f6aa474f77a3240b27966da25f252da95a3df95c58149f48b1ff65948f0"
     },
     "mata/cdid_user_results.mata": {
       "bytes": 72434,
@@ -1144,7 +1144,7 @@
     },
     "stata.toc": {
       "bytes": 83,
-      "sha256": "a620b04fb016e2197ff120bab70d627d55788c51b79cb16b9aacf3bd67b49224"
+      "sha256": "3e127e6e4fe970cbdf47ecec61d1c46f3ca21153eacc0dadd78602d11f50a8e7"
     },
     "tools/build_native.do": {
       "bytes": 2913,
@@ -1157,6 +1157,10 @@
     "validation/check_distribution.py": {
       "bytes": 3533,
       "sha256": "adf34b319268f06be698e3f6c8d642ab047495ebaad55c58dd4c4ba8a34b1a27"
+    },
+    "validation/static-observation-separation.do": {
+      "bytes": 1923,
+      "sha256": "1dce247e564e7e8e166ee2330c61cff1d67fe267971b312254f52802f87787ac"
     }
   },
   "package": {
@@ -1172,7 +1176,7 @@
     },
     "target_stata_version": "19.5",
     "toc_file": "stata.toc",
-    "version": "1.0.0.0"
+    "version": "1.0.0.1"
   },
   "publication_comment_edits": {
     "csdid/pkg/_csdid_engine_load.ado": {

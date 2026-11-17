@@ -571,6 +571,7 @@ void _cdid_st_nf_fit(struct _cdid_st_nf scalar f, struct _cdid_st_grp colvector 
     real scalar b, k, it, dev, dev_old, conv, N, ds, nk, m_k
     real colvector cells, rows, y, eta, mu, w, z, wsum, yb, beta, sc, alpha
     real matrix X, G, xb, gvec, Xc, st, xib, Gc
+    real rowvector can_increase, can_decrease, varies, min_unobs, max_unobs, min_obs, max_obs
     N = f.N
     ds = f.ds
     f.iter = J(f.nblock, 1, 0)
@@ -608,13 +609,34 @@ void _cdid_st_nf_fit(struct _cdid_st_nf scalar f, struct _cdid_st_grp colvector 
         }
         else {
             dev_old = 0
+            can_increase = can_decrease = J(1, ds, 1)
+            varies = J(1, ds, 0)
             for (k = 1; k <= rows(cells); k++) {
                 _cdid_st_nf_rows(f, grp, Y, O, cells[k], 0, 0, rows, y, X)
                 if (rows(rows) < 1) _cdid_st_fail("An observation logit cell has no unit.")
                 f.nfit[cells[k]] = rows(rows)
                 f.nobs[cells[k]] = sum(y)
+                if (f.nobs[cells[k]] == 0 | f.nobs[cells[k]] == f.nfit[cells[k]])
+                    _cdid_st_fail("The observation logit has no finite root: an entire cell is observed or unobserved.")
+                if (ds) {
+                    /* With a local intercept, each cell can set its own cutoff.
+                       A shared slope must separate in the same direction in
+                       every cell, with a strict inequality on at least one row. */
+                    Xc = X[selectindex(y :== 0), .]
+                    min_unobs = colmin(Xc)
+                    max_unobs = colmax(Xc)
+                    Xc = X[selectindex(y :== 1), .]
+                    min_obs = colmin(Xc)
+                    max_obs = colmax(Xc)
+                    can_increase = can_increase :& (max_unobs :<= min_obs)
+                    can_decrease = can_decrease :& (max_obs :<= min_unobs)
+                    varies = varies :| (min_unobs :!= max_unobs) :|
+                        (min_obs :!= max_obs) :| (min_unobs :!= min_obs)
+                }
                 dev_old = dev_old + _cdid_st_bdev(y, J(rows(y), 1, .5))
             }
+            if (any((can_increase :| can_decrease) :& varies))
+                _cdid_st_fail("The observation logit has no finite root: separation by a selection covariate.")
             conv = 0
             for (it = 1; it <= maxit; it++) {
                 G = J(ds, ds, 0)

@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.0.0  16nov2026}{...}
+{* *! version 1.0.0.1  17nov2026}{...}
 {vieweralsosee "cdid postestimation" "help cdid_postestimation"}{...}
 {vieweralsosee "cdid with dvar()" "help cdid_dvar"}{...}
 {vieweralsosee "cdid_custom" "help cdid_custom"}{...}
@@ -656,7 +656,7 @@ comparison by a Mata function; see {help cdid_custom}. It is not available with
 {title:Correspondence with R}
 
 {pstd}
-{cmd:cdid} 1.0.0.0 for Stata implements the estimators, options, and defaults
+{cmd:cdid} for Stata follows the estimators, options, and defaults
 of {browse "https://github.com/dvbn/cdid":R {cmd:cdid} 1.3.0.0}, except the R arguments that control computation or
 printing ({cmd:faster_mode}, {cmd:print_details}, {cmd:pl}, {cmd:cores},
 {cmd:control$workers}), which have no Stata counterpart and do not change the

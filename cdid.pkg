@@ -1,6 +1,6 @@
 v 3
 d cdid: chained and ordinary difference-in-differences for Stata
-d Version 1.0.0.0. Requires Stata 19.5 (StataNow) or later.
+d Version 1.0.0.1. Requires Stata 19.5 (StataNow) or later.
 d Estimates group-time average treatment effects under staggered adoption in complete and incomplete panels,
 d and effects of a binary treatment with entry and exit
 d (Bellégo, Benatia and Dortet-Bernadet 2025; Callaway and Sant'Anna 2021). Reference implementation: R cdid 1.3.0.0.
