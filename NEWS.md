@@ -1,3 +1,7 @@
+# cdid for Stata 1.0.0.1
+
+- Reject binary switching fits when a selection covariate separates an observation logit. The check applies to direct-pair and independent-date models used for observation weighting and augmented correction.
+
 # cdid for Stata 1.0.0.0
 
 The first Stata release follows [R cdid 1.3.0.0](https://github.com/dvbn/cdid/releases/tag/v1.3.0.0).

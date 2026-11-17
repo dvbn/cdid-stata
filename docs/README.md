@@ -4,7 +4,7 @@
 
 Work through a first chained difference-in-differences fit, then prepare your panel, choose comparisons and adjustments, and interpret the results. The [package overview](../README.md) has the installation commands and a runnable first example.
 
-The guide describes `cdid` 1.0.0.0 for Stata. Output shown on the pages comes from recorded runs of the commands printed on the same page, with the seed given there. Analytical population values are labeled separately.
+The guide describes `cdid` 1.0.0.1 for Stata. Output shown on the pages comes from recorded runs of the commands printed on the same page, with the seed given there. Analytical population values are labeled separately.
 
 ## Before you start
 

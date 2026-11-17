@@ -4,7 +4,7 @@
 
 [User guide](docs/README.md) · [Release notes](NEWS.md) · [R package](https://github.com/dvbn/cdid) · [Chained DiD paper (arXiv)](https://arxiv.org/abs/2301.01085) · [Author website](https://www.davidbenatia.com/research/)
 
-This guide describes `cdid` **1.0.0.0** for Stata, the first release. It is the Stata counterpart of [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0); see [Correspondence with R](#correspondence-with-r).
+This guide describes `cdid` **1.0.0.1** for Stata. The first Stata release was based on [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). See [Correspondence with R](#correspondence-with-r) and the [release notes](NEWS.md).
 
 ## Installation
 
@@ -116,6 +116,8 @@ The examples above use an absorbing treatment: units adopt once and stay treated
 | Linear cohort-by-date fixed effects | `gvar()` and `preset(cohort_time_fe)` | Cohort-by-date effects in a linear specification with unit fixed effects and a common untreated calendar path | `estat` |
 
 The `dvar()` model assumes that past treatment has no carryover beyond current status. Identification also depends on parallel trends and support for each entry or exit comparison. Entrants are compared with units that stay untreated and exiters with units that stay treated, and both estimates are reported on the same treated-minus-untreated scale. Treatment and missing-outcome adjustments are chosen as above. Supplying both `gvar()` and `dvar()` is an error, and absorbing data supplied through `dvar()` still request the static model.
+
+With observation weighting or the augmented correction, the specified observation logits need finite estimates. For example, a separate logit may be separated if everyone with a given covariate value has an observed outcome or change. See [Troubleshooting](docs/help/troubleshooting.md).
 
 [When treatment can stop and restart](docs/methods/switching.md) · [Cohort-by-date fixed effects](docs/methods/cohort-time-fe.md) · [Options reference](docs/reference/options.md)
 

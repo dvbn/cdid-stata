@@ -1,4 +1,4 @@
-*! version 1.0.0.0  16nov2026
+*! version 1.0.0.1  17nov2026
 *! cdid: chained and ordinary difference-in-differences
 program define cdid, eclass
     version 19.5
