@@ -8,7 +8,20 @@ This guide describes `cdid` **1.0.0.1** for Stata. The first Stata release was b
 
 ## Installation
 
-`cdid` requires Stata 19.5 (StataNow) or later. Install it from its repository and index the Mata library:
+`cdid` requires Stata 19.5 (StataNow) or later.
+
+### Install from SSC
+
+Version **1.0.0.0** is available directly from SSC. Run the following in Stata.
+
+```stata
+ssc install cdid
+mata: mata mlib index
+```
+
+### Install from GitHub
+
+Version **1.0.0.1** is available from the GitHub repository. Run the following in Stata.
 
 ```stata
 net install cdid, from("https://raw.githubusercontent.com/dvbn/cdid-stata/main")
