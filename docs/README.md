@@ -4,7 +4,7 @@
 
 Work through a first chained difference-in-differences fit, then prepare your panel, choose comparisons and adjustments, and interpret the results. The [package overview](../README.md) has the installation commands and a runnable first example.
 
-The guide describes `cdid` 1.0.0.1 for Stata. Output shown on the pages comes from recorded runs of the commands printed on the same page, with the seed given there. Analytical population values are labeled separately.
+The guide describes `cdid` 1.4.0.0 for Stata. Output shown on the pages comes from recorded runs of the commands printed on the same page, with the seed given there. Analytical population values are labeled separately.
 
 ## Before you start
 
@@ -89,7 +89,7 @@ Supplying both `gvar()` and `dvar()` is an error. Absorbing data supplied throug
 ## Compare with other software
 
 - [Moving from did and csdid](from-did.md) explains chained versus ordinary mode and the added options.
-- [Moving from R cdid](from-r-cdid.md) maps the arguments of R `cdid` 1.3.0.0 to Stata options and results.
+- [Moving from R cdid](from-r-cdid.md) maps R `cdid` arguments to Stata options and results.
 - [Familiar DiD models for incomplete panels](comparisons.md) relates common specifications to chained estimation.
 - [Estimate familiar DiD models with cdid](from-other-packages.md) gives the settings that reproduce `csdid`, the linear cohort-by-date regression, imputation and two-stage event studies, stepwise and cohort-chained DiD, and states which matches were run in Stata.
 - [Cross-pair chaining](methods/cross-pair.md) describes the settings that reproduce a stacked cohort fixed-effects benchmark.

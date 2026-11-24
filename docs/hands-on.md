@@ -116,6 +116,19 @@ cdid y x_bin x_cont, ivar(id) time(period) gvar(first_treat) ///
 
 ---
 
+### Compare GMM weighting on the same panel
+
+Built-in chained cohort fits default to `gmmweighting(within)`. The working covariance uses the dates and unit weights of the comparisons. Run the same fit with `gmmweighting(optimal)` to reproduce the earlier default and compare the ATT and analytical standard errors. Both fits compute uncertainty from the full study-unit influence functions.
+
+```stata
+cdid y x_bin x_cont, ivar(id) time(period) gvar(first_treat) bstrap(0) cband(0)
+display e(gmm_weighting)
+
+cdid y x_bin x_cont, ivar(id) time(period) gvar(first_treat) ///
+    gmmweighting(optimal) bstrap(0) cband(0)
+display e(gmm_weighting)
+```
+
 ## 4. Observation-Model Selection (`selection(conditional_mtar)`), Logit Specifications, and Poolings
 
 When outcome missingness depends on covariates that also drive untreated outcome changes, `selection(none)` can be biased: the units observed at both dates then over-represent strata with steeper or flatter trends, so their mean change no longer represents that of the cohort. `selection(conditional_mtar)` adjusts for this with a model of observation.

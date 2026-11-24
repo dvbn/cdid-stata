@@ -88,9 +88,11 @@ replace x = . if id == 6 & year == 2
 ```
 
 ```stata
-cdid y x, ivar(id) time(year) gvar(G) bstrap(0) cband(0)
+cdid y x, ivar(id) time(year) gvar(G) gmmweighting(optimal) bstrap(0) cband(0)
 matrix list e(reference_eligibility)
 ```
+
+The command uses `gmmweighting(optimal)` to match the recorded output.
 
 ```text
 Warning: Excluded units with missing reference covariates from the affected cohort comparisons.
@@ -135,7 +137,7 @@ Unit 3 is used: its year-2 covariate is known, and its changes between the years
 The strict rule stops instead:
 
 ```stata
-capture noisily cdid y x, ivar(id) time(year) gvar(G) bstrap(0) cband(0) missingreference(error)
+capture noisily cdid y x, ivar(id) time(year) gvar(G) gmmweighting(optimal) bstrap(0) cband(0) missingreference(error)
 ```
 
 ```text
@@ -159,7 +161,7 @@ replace year = 2 in L
 replace G = 3 in L
 replace y = . in L
 replace x = `x9_year2' in L
-cdid y x, ivar(id) time(year) gvar(G) bstrap(0) cband(0)
+cdid y x, ivar(id) time(year) gvar(G) gmmweighting(optimal) bstrap(0) cband(0)
 display "`e(reference_status)'"
 ```
 

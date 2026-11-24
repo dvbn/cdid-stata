@@ -1,6 +1,6 @@
 # Moving from R cdid
 
-`cdid` for Stata follows the estimators and defaults of [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). The [differences below](#differences-to-keep-in-mind) describe the behavior of each interface. This page maps R functions and arguments to Stata commands and options. "Corresponds" means the same estimator with the same defaults. Estimates and standard errors were compared with R on the configurations of the Stata test suite and agree there up to numerical precision; agreement is not established beyond them, and multiplier-bootstrap draws come from Stata's random-number generator and differ from R's.
+The original Stata port followed [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). The chained cohort weighting defaults follow [R `cdid` 1.4.0.0](https://github.com/dvbn/cdid/commit/5f554b848038c9613208164032794ae19e7e5d04). The [differences below](#differences-to-keep-in-mind) describe the behavior of each interface. This page maps R functions and arguments to Stata commands and options. "Corresponds" means the same estimator with the same defaults. Estimates and standard errors were compared with R on the configurations of the Stata test suite and agree there up to numerical precision; agreement is not established beyond them, and multiplier-bootstrap draws come from Stata's random-number generator and differ from R's.
 
 ## Functions
 
@@ -116,6 +116,10 @@ None of these arguments changes the estimator.
 | `cdid_plot` | `group()`, `cells`, `saving()`, `export()`, `plotdata()`, `replace` | Graph control. |
 | `cdid_export` | `type()`, `replace` | Tables as Stata datasets. |
 | `cdid_diagnostics` | `detail` | Lists unavailable cells; in R, inspect the result object. |
+
+## Chained cohort weighting
+
+Built-in IPW, regression and DR default to `within` in both languages. For the earlier default, use `gmm_weighting = "optimal"` in R or `gmmweighting(optimal)` in Stata. Switching fits, custom estimators and the IPW and DR branches of the cohort fixed-effects preset default to `optimal`. The regression branch of the preset uses within-unit least squares. See [GMM weighting](methods/gmm.md) for details.
 
 ## Differences to keep in mind
 

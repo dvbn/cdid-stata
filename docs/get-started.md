@@ -81,10 +81,10 @@ The simulated effect is $1 + 0.25\,(t - g)$ from the treatment date onward and z
 ## Estimate the effects
 
 ```stata
-cdid y x, ivar(id) time(year) gvar(G)
+cdid y x, ivar(id) time(year) gvar(G) gmmweighting(optimal)
 ```
 
-The command uses the defaults: doubly robust treatment adjustment (`method(dr)`) with `x` as covariate, never-treated controls, PT-post, a varying base period for the pretreatment cells, and 1000 multiplier-bootstrap draws with a 95% simultaneous band (`bstrap(1) cband(1) biters(1000) level(95)`). The draws use Stata's random-number stream, so the `set seed` above makes them reproducible.
+This example specifies `gmmweighting(optimal)` to reproduce the recorded output. Omit that option to use the current built-in cohort default, `within`. The other settings use their defaults, including doubly robust treatment adjustment (`method(dr)`) with `x` as covariate, never-treated controls, PT-post, a varying base period for the pretreatment cells, and 1000 multiplier-bootstrap draws with a 95% simultaneous band (`bstrap(1) cband(1) biters(1000) level(95)`). The draws use Stata's random-number stream, so the `set seed` above makes them reproducible.
 
 | Option | Value in this example | Definition |
 | --- | --- | --- |
@@ -92,6 +92,7 @@ The command uses the defaults: doubly robust treatment adjustment (`method(dr)`)
 | `controlgroup()` | `nevertreated` (default) | [Data, timing and comparison group](reference/options.md#data-timing-and-comparison-group) |
 | `method()` | `dr` (default) | [Treatment adjustment](reference/options.md#treatment-adjustment) |
 | `ptassumption()`, `baseperiod()` | `post`, `varying` (defaults) | [Parallel trends and reporting](reference/options.md#parallel-trends-and-reporting) |
+| `gmmweighting()` | `optimal` | [GMM weighting](methods/gmm.md) |
 | `bstrap()`, `cband()`, `biters()`, `level()` | defaults | [Inference](reference/options.md#inference) |
 
 ## Read the result
@@ -209,7 +210,7 @@ The first `cdid_plot` draws the current aggregation, the event study; after `est
 estimates restore fit
 cdid_export using gs_cells, type(cells) replace
 tempfile saved
-cdid y x, ivar(id) time(year) gvar(G) saving(`saved')
+cdid y x, ivar(id) time(year) gvar(G) gmmweighting(optimal) saving(`saved')
 cdid_load using `saved'
 estat dynamic
 ```

@@ -4,7 +4,7 @@
 
 [User guide](docs/README.md) · [Release notes](NEWS.md) · [R package](https://github.com/dvbn/cdid) · [Chained DiD paper (arXiv)](https://arxiv.org/abs/2301.01085) · [Author website](https://www.davidbenatia.com/research/)
 
-This guide describes `cdid` **1.0.0.1** for Stata. The first Stata release was based on [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). See [Correspondence with R](#correspondence-with-r) and the [release notes](NEWS.md).
+This guide describes `cdid` **1.4.0.0** for Stata. The first Stata release was based on [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). See [Correspondence with R](#correspondence-with-r) and the [release notes](NEWS.md).
 
 ## Installation
 
@@ -21,7 +21,7 @@ mata: mata mlib index
 
 ### Install from GitHub
 
-Version **1.0.0.1** is available from the GitHub repository. Run the following in Stata.
+Version **1.4.0.0** is available from the GitHub repository. Run the following in Stata.
 
 ```stata
 net install cdid, from("https://raw.githubusercontent.com/dvbn/cdid-stata/main")
@@ -100,7 +100,9 @@ Covariates that change over time are read at each cohort's reference date from t
 
 `controlgroup()` selects never-treated or not-yet-treated controls, as in `csdid`. `ptassumption(post)`, the default, assumes parallel trends from each cohort's reference period onward. `ptassumption(all)` adds the same assumption from a chosen start date `ptstart()` up to each reference period, so that earlier dates can also serve as baselines. `ptassumption(ctrl)` keeps PT-post and adds common untreated trends among the clean control cohorts only. Valid added restrictions can make more effects available or improve precision, but neither gain is guaranteed, and false restrictions bias the estimates. `baseperiod()` changes only how cells before treatment are reported, not the assumption.
 
-When a cohort and its eligible controls are observed over different windows and share no date pair, `crosspair` links their separate within-unit changes through calendar dates where the trend assumption applies. `cdid_chain` shows which comparisons identify each effect and the weights that combine them. The default `gmmweighting(optimal)` estimates the moment covariance from the data; `gmmweighting(within)` weights comparisons by their within-unit covariance under uncorrelated level shocks.
+When a cohort and its eligible controls are observed over different windows and share no date pair, `crosspair` links their separate within-unit changes through calendar dates where the trend assumption applies. `cdid_chain` shows which comparisons identify each effect and the weights that combine them.
+
+Built-in chained cohort IPW, regression and DR default to `gmmweighting(within)`. It accounts for shared dates using the covariance of within-unit changes under uncorrelated level shocks. Use `gmmweighting(optimal)` to reproduce the earlier default, which estimates the covariance of comparison scores from the data. Inference uses the full study-unit influence functions. Inspect the applied choice with `cdid_diagnostics` or `display e(gmm_weighting)` after a chained cohort fit.
 
 [Parallel trends](docs/methods/parallel-trends.md) · [Add PT-all restrictions](docs/examples/pt-all-comparison.md) · [Cross-pair chaining, PT-ctrl and within-unit weighting](docs/methods/cross-pair.md) · [Short pretreatment windows](docs/examples/short-pretreatment-windows.md) · [GMM weighting and covariance regularization](docs/methods/gmm.md)
 
@@ -160,7 +162,7 @@ Each command has a help file: `help cdid`, `help cdid postestimation`, `help cdi
 
 ## Correspondence with R
 
-`cdid` for Stata follows the estimators and defaults of [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). The [R-to-Stata guide](docs/from-r-cdid.md) lists the supported option mappings and interface differences. `cdid` corresponds to `att_gt()`, `estat` to `aggte()`, `cdid_plot` to `ggdid()`, `cdid_pretest` to `conditional_did_pretest()`, `cdid_chain` to `chain_report()` and `cdid_nuisance` to `nuisance_models()`. Estimates and standard errors were compared with those of R on the configurations of the Stata test suite and agree there up to numerical precision; agreement is not established beyond them, and multiplier-bootstrap draws come from Stata's random-number generator and differ from R's. Ordinary mode uses `csdid` 2.0.2 where R `cdid` delegates to `did`. [Moving from R cdid](docs/from-r-cdid.md) maps the R arguments to Stata options and lists those without a counterpart in either direction.
+The original Stata port followed [R `cdid` 1.3.0.0](https://github.com/dvbn/cdid/tree/v1.3.0.0). The chained cohort weighting defaults follow [R `cdid` 1.4.0.0](https://github.com/dvbn/cdid/commit/5f554b848038c9613208164032794ae19e7e5d04). The [R-to-Stata guide](docs/from-r-cdid.md) lists the supported option mappings and interface differences. `cdid` corresponds to `att_gt()`, `estat` to `aggte()`, `cdid_plot` to `ggdid()`, `cdid_pretest` to `conditional_did_pretest()`, `cdid_chain` to `chain_report()` and `cdid_nuisance` to `nuisance_models()`. Estimates and standard errors were compared with those of R on the configurations of the Stata test suite and agree there up to numerical precision; agreement is not established beyond them, and multiplier-bootstrap draws come from Stata's random-number generator and differ from R's. Ordinary mode uses `csdid` 2.0.2 where R `cdid` delegates to `did`. [Moving from R cdid](docs/from-r-cdid.md) maps the R arguments to Stata options and lists those without a counterpart in either direction.
 
 ## References
 

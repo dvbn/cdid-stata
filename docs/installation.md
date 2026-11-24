@@ -1,6 +1,6 @@
 # Installing cdid
 
-These pages describe `cdid` 1.0.0.1 for Stata.
+These pages describe `cdid` 1.4.0.0 for Stata.
 
 ## Requirements
 
