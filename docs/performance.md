@@ -4,7 +4,7 @@ This page reports computation times of `cdid` 1.0.0.0 on simulated incomplete pa
 
 ## What was measured
 
-The do-file simulates a staggered panel with three treated cohorts, never-treated units, five covariates and outcomes missing with a probability that depends on one covariate. It times complete `cdid` calls, including data checks, estimation, influence functions, the multiplier bootstrap where requested, and the display and posting of results, for four corrections for missing outcomes and two panel sizes.
+The do-file simulates a staggered panel with three treated cohorts, never-treated units, five covariates and outcomes missing with a probability that depends on one covariate. The commands specify `gmmweighting(optimal)` to match the weighting used in version 1.0.0.0. The do-file times complete `cdid` calls, including data checks, estimation, influence functions, the multiplier bootstrap where requested, and the display and posting of results, for four corrections for missing outcomes and two panel sizes.
 
 ```stata
 capture program drop perf_panel
@@ -26,25 +26,25 @@ end
 
 * One untimed call first, so that one-time loading costs are not timed
 perf_panel 500
-quietly cdid y x1-x5, ivar(id) time(year) gvar(G) bstrap(0) cband(0)
+quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal) bstrap(0) cband(0)
 
 foreach n in 2000 8000 {
     perf_panel `n'
     timer clear
     timer on 1
-    quietly cdid y x1-x5, ivar(id) time(year) gvar(G)
+    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal)
     timer off 1
     timer on 2
-    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) selection(conditional_mtar)
+    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal) selection(conditional_mtar)
     timer off 2
     timer on 3
-    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) selection(conditional_mtar) selmethod(imputation)
+    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal) selection(conditional_mtar) selmethod(imputation)
     timer off 3
     timer on 4
-    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) selection(conditional_mtar) selmethod(dr)
+    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal) selection(conditional_mtar) selmethod(dr)
     timer off 4
     timer on 5
-    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) selection(conditional_mtar) selmethod(dr) bstrap(0) cband(0)
+    quietly cdid y x1-x5, ivar(id) time(year) gvar(G) gmmweighting(optimal) selection(conditional_mtar) selmethod(dr) bstrap(0) cband(0)
     timer off 5
     display as text _n "Units: `n'"
     timer list
@@ -74,7 +74,7 @@ Units: 8000
 processors: 4, Stata 19.5, Unix Mac (Apple Silicon)
 ```
 
-Timer 1 is the default fit (doubly robust treatment adjustment, no correction for missing outcomes, 1000 bootstrap draws); timers 2 to 4 add observation weighting, change imputation and the augmented correction; timer 5 repeats timer 4 with analytical standard errors. Each line gives the elapsed seconds of one call. Times this short vary from run to run and indicate orders of magnitude only.
+Timer 1 runs the version 1.0.0.0 default fit (doubly robust treatment adjustment, no correction for missing outcomes, 1000 bootstrap draws); timers 2 to 4 add observation weighting, change imputation and the augmented correction; timer 5 repeats timer 4 with analytical standard errors. Each line gives the elapsed seconds of one call. Times this short vary from run to run and indicate orders of magnitude only.
 
 ## Controlling memory and time
 

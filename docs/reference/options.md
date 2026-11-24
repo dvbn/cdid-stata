@@ -96,12 +96,12 @@ See [Handling missing outcomes](../methods/missing-outcomes.md) and [Sampling in
 
 | Option | Default | Estimators | Description |
 | --- | --- | --- | --- |
-| `gmmweighting(optimal\|two_step\|within\|identity)` | `optimal` | chained, cross-pair, preset | `two_step` is a synonym of `optimal`. `within` is not available with `method(custom)`. With the preset, `method(reg)` allows only `within`, and `method(ipw)` or `method(dr)` allow `optimal`, `two_step` or `identity`, not `within`. |
+| `gmmweighting(optimal\|two_step\|within\|identity)` | `within` for built-in chained cohort IPW, regression and DR | chained, cross-pair, preset | `two_step` is a synonym of `optimal`. Custom estimators and the preset's IPW and DR branches default to `optimal` and allow `identity`. The preset's regression branch uses within-unit least squares. |
 | `gmmcovariance(tikhonov)` | `tikhonov` | chained, cross-pair, preset | Only value. |
 | `condition(#)` | `1e-10` | chained, cross-pair, preset | Relative eigenvalue threshold in (0, 1) that triggers regularization. |
 | `ridge(#)` | `1e-4` | chained, cross-pair, preset | Relative Tikhonov multiplier, > 0. |
 
-See [GMM weighting](../methods/gmm.md).
+Use `gmmweighting(optimal)` to reproduce the earlier built-in chained cohort default. With observation correction, pooled outcome regressions, or covariates or weights that vary over time, `within` requires a constant in the covariate design. When a specification requires `noconstant` and `within` is unavailable, choose `gmmweighting(optimal)` or `gmmweighting(identity)` where supported. See [GMM weighting](../methods/gmm.md).
 
 ## Study population and weights
 

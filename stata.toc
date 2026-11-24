@@ -1,3 +1,3 @@
 v 3
-d cdid 1.0.0.1 for Stata
+d cdid 1.4.0.0 for Stata
 p cdid Chained and ordinary difference-in-differences

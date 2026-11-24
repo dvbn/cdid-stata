@@ -187,7 +187,7 @@ struct cdid_gmm_result scalar _cdid_gmm_fit_core(real matrix r, real matrix A,
     real matrix Vr, real matrix G, real scalar M, real matrix H,
     string scalar weighting, real scalar condition_trigger,
     real scalar ridge_relative, real scalar max_matrix_entries,
-    struct cdid_gmm_unit_gram scalar source)
+    struct cdid_gmm_unit_gram scalar source, | real scalar apply_empirical_rank_bound)
 {
     struct cdid_gmm_result scalar out, qr_map
     real scalar L, P, Jt, i, j, total, cap, rank_T, trigger, zero
@@ -196,6 +196,7 @@ struct cdid_gmm_result scalar _cdid_gmm_fit_core(real matrix r, real matrix A,
     real matrix Z, Lambda, Hboth, ep, U2, Bfit
     real rowvector d, piv, tau, da, order_d
     real colvector qy, beta_p, e
+    if (args()==11) apply_empirical_rank_bound=1
     L = rows(A); P = cols(A); Jt = rows(H)
     if (L<1 | P<1 | P>L | rows(r)!=L | cols(r)!=1 |
         rows(Vr)!=L | cols(Vr)!=L | rows(G)!=L | cols(G)!=L | cols(H)!=P)
@@ -302,7 +303,8 @@ struct cdid_gmm_result scalar _cdid_gmm_fit_core(real matrix r, real matrix A,
         else if (out.d_min==0) out.trigger_reason="exact_zero_eigenvalue"
         else if (out.rho<condition_trigger) out.trigger_reason="spectral_condition_below_trigger"
         else out.trigger_reason="well_conditioned_pd"
-        if (internal_gram & !trigger) {
+        // The sample rank bound applies when the empirical IF Gram supplies the weights.
+        if (internal_gram & !trigger & apply_empirical_rank_bound) {
             if (L>source.sample_rank_upper) {
                 trigger=1; out.trigger_reason="known_unit_covariance_rank_bound"
             }
@@ -531,7 +533,7 @@ struct cdid_gmm_result scalar cdid_gmm_fit_within_norm(real matrix r, real matri
     S = source.covariance[cols, cols]
     mu = source.mean[cols]
     source.covariance = Vw
-    out = _cdid_gmm_fit_core(r, A, Vw, G, M, H, "optimal", trigger, ridge, cap, source)
+    out = _cdid_gmm_fit_core(r, A, Vw, G, M, H, "optimal", trigger, ridge, cap, source, 0)
     out.weighting_requested = "within"
     out.covariance_provenance = "analytical_within_unit_levels_weight"
     out.unit_gram_covariance = S

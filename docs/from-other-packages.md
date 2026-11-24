@@ -19,7 +19,7 @@ For a numerical match, use the same sample, outcome and covariates, the same unt
 
 ## Callaway and Sant'Anna with csdid
 
-The examples on this page use a complete panel of 72 units over six dates: a third never treated, a third first treated at date 3 and a third at date 5. Each unit has a fixed effect, the untreated path is $\sin(t)$, and the effect grows with time since adoption.
+The examples on this page use a complete panel of 72 units over six dates: a third never treated, a third first treated at date 3 and a third at date 5. Each unit has a fixed effect, the untreated path is $\sin(t)$, and the effect grows with time since adoption. The built-in chained comparisons specify `gmmweighting(optimal)` to match the recorded output.
 
 ```stata
 clear
@@ -43,7 +43,7 @@ cdid y, ivar(id) time(t) gvar(g) mode(ordinary) controlgroup(notyettreated) meth
 matrix b_ordinary = e(b)
 csdid y, ivar(id) time(t) gvar(g) nevertreated method(ipw)
 matrix b_never = e(b)
-cdid y, ivar(id) time(t) gvar(g) method(ipw) bstrap(0) cband(0)
+cdid y, ivar(id) time(t) gvar(g) method(ipw) gmmweighting(optimal) bstrap(0) cband(0)
 matrix b_chained = e(b)
 mata: post = (2, 3, 4, 5, 9, 10)
 mata: max(abs(st_matrix("b_csdid")[post] - st_matrix("b_ordinary")[post]))
@@ -136,7 +136,7 @@ preserve
 keep if inlist(g, 0, 3) & inlist(t, 2, 5)
 replace t = cond(t == 2, 1, 2)
 replace g = cond(g == 3, 2, 0)
-cdid y, ivar(id) time(t) gvar(g) method(reg) baseperiod(universal) bstrap(0) cband(0)
+cdid y, ivar(id) time(t) gvar(g) method(reg) baseperiod(universal) gmmweighting(optimal) bstrap(0) cband(0)
 matrix b = e(b)
 scalar att_cdid = b[1, colsof(b)]
 bysort id (t): generate double dy = y[2] - y[1]
@@ -163,7 +163,7 @@ forvalues s = 3/6 {
     quietly keep if inlist(t, `s' - 1, `s') & (g == 3 | g == 0 | g > `s')
     quietly replace g = cond(g == 3, 2, 0)
     quietly replace t = t - `s' + 2
-    quietly cdid y, ivar(id) time(t) gvar(g) method(reg) baseperiod(universal) bstrap(0) cband(0)
+    quietly cdid y, ivar(id) time(t) gvar(g) method(reg) baseperiod(universal) gmmweighting(optimal) bstrap(0) cband(0)
     matrix b = e(b)
     scalar total_cdid = total_cdid + b[1, colsof(b)]
     bysort id (t): generate double dy = y[2] - y[1]

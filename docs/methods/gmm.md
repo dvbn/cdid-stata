@@ -30,7 +30,11 @@ Several properties follow directly from this formulation:
 
 ## Weighting and covariance options
 
-`gmmweighting(optimal)` is the default feasible two-step weighting; `two_step` is a synonym. `gmmweighting(identity)` minimizes the unweighted criterion over all comparisons. `gmmweighting(within)` weights by the inverse of an analytical covariance instead of the estimated one, described below. `gmmcovariance(tikhonov)` is the only covariance regularization available, with `condition(1e-10)` and `ridge(1e-4)` as fixed defaults. These are numerical settings, not identification thresholds or universally optimal tuning choices.
+Built-in chained cohort IPW, outcome regression and DR default to `gmmweighting(within)`. It weights comparisons using the inverse of the covariance of within-unit changes implied by a working model. A date shared by two comparisons contributes to their covariance. For example, a shock in period 2 enters the change from 1 to 2 positively and the change from 2 to 3 negatively. The working covariance uses this structure and the unit weights. It determines the weights directly and gives the fixed-effects weighting in [matched regression designs](cross-pair.md).
+
+`gmmweighting(optimal)` uses feasible two-step weighting based on the estimated covariance of comparison scores. Use it to reproduce the earlier default for built-in chained cohort fits. `two_step` is a synonym. Switching fits, custom estimators, and the IPW and DR branches of `preset(cohort_time_fe)` default to `optimal`. The regression branch of the preset uses within-unit least squares. `gmmweighting(identity)` minimizes the unweighted criterion over all comparisons where available. Inspect `e(gmm_weighting)` or run `cdid_diagnostics` after a chained cohort fit to see the applied weighting.
+
+`gmmcovariance(tikhonov)` is the only covariance regularization available, with `condition(1e-10)` and `ridge(1e-4)` as fixed defaults. These are numerical settings, not identification thresholds or universally optimal tuning choices.
 
 ### Within-unit weighting
 
@@ -41,7 +45,7 @@ V_{ml} = 1\{g_m = g_l\}\, \sigma_{ml} \sum_i \frac{\omega_{mi}\,\omega_{li}}{w_i
 \sigma_{ml} = 1\{t_m = t_l\} + 1\{s_m = s_l\} - 1\{t_m = s_l\} - 1\{s_m = t_l\},
 $$
 
-where $g_m$ is the target cohort of comparison $m$ and $(s_m, t_m)$ its dates. For two comparisons of the same target cohort, $V_{ml}$ is proportional to their covariance under these assumptions. Comparisons of different target cohorts that share control units are also correlated, but $V$ sets these entries to zero: it is a working matrix, block diagonal by target cohort. `gmmweighting(within)` uses $V$ in place of the estimated covariance, after the exact reductions described next; the choice of weighting affects efficiency, not consistency. Comparisons of the same target cohort, control group and set of observed units that form cycles over dates are reduced to a spanning forest of each group, with $G = E'E$ for the removed comparisons. The weighting matrix does not depend on the outcome data, and standard errors still use the estimated unit influence functions, so inference does not rely on the level-shock model. It is available with or without `selection(conditional_mtar)`, with every `selmethod()`, with `crosspair` and with covariates or weights that vary over time; with `selection()`, `outcomepooling(pooled)` or covariates that vary over time, it requires a constant in the covariate design. It is not available with `method(custom)` or `dvar()`.
+where $g_m$ is the target cohort of comparison $m$ and $(s_m, t_m)$ its dates. For two comparisons of the same target cohort, $V_{ml}$ is proportional to their covariance under these assumptions. Comparisons of different target cohorts that share control units are also correlated, but $V$ sets these entries to zero: it is a working matrix, block diagonal by target cohort. `gmmweighting(within)` uses $V$ in place of the estimated covariance, after the exact reductions described next; the choice of weighting affects efficiency, not consistency. Comparisons of the same target cohort, control group and set of observed units that form cycles over dates are reduced to a spanning forest of each group, with $G = E'E$ for the removed comparisons. The weighting matrix does not depend on the outcome data, and standard errors still use the estimated unit influence functions, so inference does not rely on the level-shock model. It is available with or without `selection(conditional_mtar)`, with every `selmethod()`, with `crosspair` and with covariates or weights that vary over time; with observation correction, `outcomepooling(pooled)`, or covariates or weights that vary over time, it requires a constant in the covariate design. It is not available with `method(custom)` or `dvar()`.
 
 ## Exact reductions and the metric of the full set of comparisons
 
@@ -159,9 +163,13 @@ Clustering sums unit influence functions for inference. It does not change unit-
 
 ## Examples and computational limits
 
-With the data of the hands-on do-file in memory, compare the same effects under analytical inference:
+With the data of the hands-on do-file in memory, compare the default within weights, the earlier optimal weights and the unweighted criterion under analytical inference:
 
 ```stata
+cdid y x_bin x_cont, ivar(id) time(period) gvar(first_treat) ///
+    method(dr) bstrap(0) cband(0)
+cdid_diagnostics, detail
+
 cdid y x_bin x_cont, ivar(id) time(period) gvar(first_treat) ///
     method(dr) gmmweighting(optimal) bstrap(0) cband(0)
 cdid_diagnostics, detail

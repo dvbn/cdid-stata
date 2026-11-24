@@ -23,14 +23,14 @@ For cohort 2005, the reference date is 2004. Only cohorts 2009 and 2010 are untr
 
 ## Within-unit weighting and optimal weighting
 
-In this design all units of a cohort share the same dates, and neither fit adjusts for covariates or for missing outcomes. The first fit uses cross-pair links, control parallel trends and within-unit weighting; its point estimates equal the coefficients of stacked target-cohort regressions on the same clean-control samples ([Cohort-Chained DiD](../from-other-packages.md#cohort-chained-did)). The second uses the weaker PT-post with the default optimal weighting.
+In this design all units of a cohort share the same dates, and neither fit adjusts for covariates or for missing outcomes. The first fit uses cross-pair links, control parallel trends and within-unit weighting; its point estimates equal the coefficients of stacked target-cohort regressions on the same clean-control samples ([Cohort-Chained DiD](../from-other-packages.md#cohort-chained-did)). The second uses the weaker PT-post with explicit `gmmweighting(optimal)` to reproduce the earlier default.
 
 ```stata
 cdid y, ivar(id) time(period) gvar(G) controlgroup(notyettreated) baseperiod(universal) crosspair ptassumption(ctrl) gmmweighting(within) bstrap(0) cband(0)
 estimates store within
 estat dynamic, narm
-cdid y, ivar(id) time(period) gvar(G) controlgroup(notyettreated) crosspair ptassumption(post) bstrap(0) cband(0)
-cdid y, ivar(id) time(period) gvar(G) controlgroup(notyettreated) bstrap(0) cband(0)
+cdid y, ivar(id) time(period) gvar(G) controlgroup(notyettreated) crosspair ptassumption(post) gmmweighting(optimal) bstrap(0) cband(0)
+cdid y, ivar(id) time(period) gvar(G) controlgroup(notyettreated) gmmweighting(optimal) bstrap(0) cband(0)
 ```
 
 The within-weighted fit:
@@ -256,7 +256,7 @@ ATT(2005, 2005) is identified directly by control cohorts observed in both 2004 
 
 1. **Keep irregular waves.** `cdid` chains over the stored study dates, so a switch from annual to biennial waves does not require dropping dates.
 2. **Keep unit identifiers.** When attrition is related to persistent outcome levels, cohort fixed-effects regressions mix changes in composition with treatment effects, while within-unit differencing removes the persistent levels. The representativeness of the changes and parallel trends are still required.
-3. **Choose the assumption and the weighting.** `gmmweighting(within) ptassumption(ctrl)` reproduces the stacked regressions. `ptassumption(post)` with the default `gmmweighting(optimal)` avoids the PT-ctrl restriction before the reference date, whose violation by a control cohort would bias the post-treatment estimates, and estimates the covariance of the comparisons from the data.
+3. **Choose the assumption and the weighting.** `gmmweighting(within) ptassumption(ctrl)` reproduces the stacked regressions. `ptassumption(post)` with explicit `gmmweighting(optimal)` avoids the PT-ctrl restriction before the reference date, whose violation by a control cohort would bias the post-treatment estimates, and estimates the covariance of the comparisons from the data.
 4. **Adjust when needed.** Covariates, sampling weights that vary over time (`fixweights()`), and covariate-dependent attrition (`selection(conditional_mtar)` with any `selmethod()`) are supported with `crosspair`; see [Cross-pair chaining](../methods/cross-pair.md).
 
 ---

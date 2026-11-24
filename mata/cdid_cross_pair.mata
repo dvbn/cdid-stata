@@ -699,7 +699,8 @@ void _cdid_xp_gmm(struct cdid_xp_fit scalar F, struct cdid_xp_design scalar D, r
     struct cdid_gmm_result scalar sol
     if (rows(H) == 0) return
     if (weighting == "identity") sol = cdid_gmm_identity_map(F.mhat, D.A, H, 2^53 - 1)
-    else sol = _cdid_gmm_fit_core(F.mhat, D.A, F.V, G, M_all, H, "optimal", trigger, ridge, 2^53 - 1, src)
+    else sol = _cdid_gmm_fit_core(F.mhat, D.A, F.V, G, M_all, H, "optimal", trigger, ridge,
+        2^53 - 1, src, weighting != "within")
     F.att[cix] = sol.targets
     F.avail[cix] = J(rows(cix), 1, 1)
     F.Lam[., cix] = sol.target_loadings'
