@@ -12,7 +12,7 @@ This guide describes `cdid` **1.4.0.0** for Stata. The first Stata release was b
 
 ### Install from SSC
 
-Version **1.0.0.0** is available directly from SSC. Run the following in Stata.
+Version **1.4.0.0** is available directly from SSC. Run the following in Stata.
 
 ```stata
 ssc install cdid
